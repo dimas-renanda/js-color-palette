@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><title>Color Palette Generator</title>
+<style>
+  body{font-family:sans-serif;background:#1a1a2e;color:#eee;text-align:center;padding:2rem}
+  h1{margin-bottom:1rem}
+  #palette{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:2rem 0}
+  .swatch{width:120px;height:120px;border-radius:12px;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;padding:.5rem;font-size:.75rem;cursor:pointer;
+    transition:transform .2s;box-shadow:0 4px 15px rgba(0,0,0,.4)}
+  .swatch:hover{transform:scale(1.05)}
+  button{background:#e94560;color:#fff;border:none;padding:.75rem 2rem;border-radius:8px;
+    font-size:1rem;cursor:pointer}
+  button:hover{background:#c73652}
+  #msg{font-size:.85rem;opacity:.6;margin-top:.5rem}
+</style>
+</head>
+<body>
+<h1>🎨 Color Palette Generator</h1>
+<button onclick="generate()">Generate Palette</button>
+<div id="palette"></div>
+<p id="msg">Click a swatch to copy its hex code</p>
+<script>
+function randomHex(){return'#'+[...Array(6)].map(()=>'0123456789ABCDEF'[Math.floor(Math.random()*16)]).join('')}
+function generate(){
+  const p=document.getElementById('palette');p.innerHTML='';
+  for(let i=0;i<6;i++){
+    const hex=randomHex();
+    const s=document.createElement('div');
+    s.className='swatch';s.style.background=hex;s.textContent=hex;
+    s.onclick=()=>{navigator.clipboard.writeText(hex);document.getElementById('msg').textContent='Copied '+hex+'!'};
+    p.appendChild(s);
+  }
+}
+generate();
+</script>
+</body></html>
